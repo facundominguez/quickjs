@@ -384,38 +384,59 @@ ifdef CONFIG_M32
 test: qjs32
 endif
 
+ifdef VALGRIND
+QJSC=valgrind ./qjsc
+QJS32=valgrind ./qjs32
+else
+QJSC=./qjsc
+QJS32=./qjs32
+endif
+
 test: qjs
-	./qjs tests/test_closure.js
-	./qjs tests/test_language.js
-	./qjs tests/test_builtin.js
-	./qjs tests/test_loop.js
-	./qjs tests/test_std.js
-	./qjs tests/test_worker.js
+	$(QJSC) tests/test_closure.js
+	$(QJSC) tests/test_language.js
+	$(QJSC) tests/test_builtin.js
+	$(QJSC) tests/test_loop.js
+	$(QJSC) tests/test_std.js
+	$(QJSC) tests/test_worker.js
 ifndef CONFIG_DARWIN
 ifdef CONFIG_BIGNUM
-	./qjs --bignum tests/test_bjson.js
+	$(QJSC) --bignum tests/test_bjson.js
 else
-	./qjs tests/test_bjson.js
+	$(QJSC) tests/test_bjson.js
 endif
-	./qjs examples/test_point.js
+	$(QJSC) examples/test_point.js
 endif
 ifdef CONFIG_BIGNUM
-	./qjs --bignum tests/test_op_overloading.js
-	./qjs --bignum tests/test_bignum.js
-	./qjs --qjscalc tests/test_qjscalc.js
+	$(QJSC) --bignum tests/test_op_overloading.js
+	$(QJSC) --bignum tests/test_bignum.js
+	$(QJSC) --qjscalc tests/test_qjscalc.js
 endif
 ifdef CONFIG_M32
-	./qjs32 tests/test_closure.js
-	./qjs32 tests/test_language.js
-	./qjs32 tests/test_builtin.js
-	./qjs32 tests/test_loop.js
-	./qjs32 tests/test_std.js
-	./qjs32 tests/test_worker.js
+	$(QJS32) tests/test_closure.js
+	$(QJS32) tests/test_language.js
+	$(QJS32) tests/test_builtin.js
+	$(QJS32) tests/test_loop.js
+	$(QJS32) tests/test_std.js
+	$(QJS32) tests/test_worker.js
 ifdef CONFIG_BIGNUM
-	./qjs32 --bignum tests/test_op_overloading.js
-	./qjs32 --bignum tests/test_bignum.js
-	./qjs32 --qjscalc tests/test_qjscalc.js
+	$(QJS32) --bignum tests/test_op_overloading.js
+	$(QJS32) --bignum tests/test_bignum.js
+	$(QJS32) --qjscalc tests/test_qjscalc.js
 endif
+endif
+
+test_qjsc: qjsc
+	$(QJSC) -c tests/test_closure.js
+	$(QJSC) -c tests/test_language.js
+	$(QJSC) -c tests/test_builtin.js
+	$(QJSC) -c tests/test_loop.js
+	$(QJSC) -c tests/test_std.js
+	$(QJSC) -c tests/test_worker.js
+ifdef CONFIG_BIGNUM
+	$(QJSC) -c -fbignum tests/test_op_overloading.js
+	$(QJSC) -c -fbignum tests/test_bignum.js
+	$(QJSC) -c tests/test_qjscalc.js
 endif
 
 stats: qjs qjs32
