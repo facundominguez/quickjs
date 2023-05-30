@@ -384,6 +384,7 @@ ifdef CONFIG_M32
 test: qjs32
 endif
 
+QJS=./qjs
 ifdef VALGRIND
 QJSC=valgrind ./qjsc
 QJS32=valgrind ./qjs32
@@ -393,24 +394,24 @@ QJS32=./qjs32
 endif
 
 test: qjs
-	$(QJSC) tests/test_closure.js
-	$(QJSC) tests/test_language.js
-	$(QJSC) tests/test_builtin.js
-	$(QJSC) tests/test_loop.js
-	$(QJSC) tests/test_std.js
-	$(QJSC) tests/test_worker.js
+	$(QJS) tests/test_closure.js
+	$(QJS) tests/test_language.js
+	$(QJS) tests/test_builtin.js
+	$(QJS) tests/test_loop.js
+	$(QJS) tests/test_std.js
+	$(QJS) tests/test_worker.js
 ifndef CONFIG_DARWIN
 ifdef CONFIG_BIGNUM
-	$(QJSC) --bignum tests/test_bjson.js
+	$(QJS) --bignum tests/test_bjson.js
 else
-	$(QJSC) tests/test_bjson.js
+	$(QJS) tests/test_bjson.js
 endif
-	$(QJSC) examples/test_point.js
+	$(QJS) examples/test_point.js
 endif
 ifdef CONFIG_BIGNUM
-	$(QJSC) --bignum tests/test_op_overloading.js
-	$(QJSC) --bignum tests/test_bignum.js
-	$(QJSC) --qjscalc tests/test_qjscalc.js
+	$(QJS) --bignum tests/test_op_overloading.js
+	$(QJS) --bignum tests/test_bignum.js
+	$(QJS) --qjscalc tests/test_qjscalc.js
 endif
 ifdef CONFIG_M32
 	$(QJS32) tests/test_closure.js
