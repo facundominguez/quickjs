@@ -124,7 +124,7 @@ LDFLAGS+=-p
 endif
 ifdef CONFIG_ASAN
 CFLAGS+=-fsanitize=address -fno-omit-frame-pointer
-LDFLAGS+=-fsanitize=address -fno-omit-frame-pointer
+LDFLAGS+=-lstdc++ -fsanitize=address -fno-omit-frame-pointer
 endif
 ifdef CONFIG_WIN32
 LDEXPORT=
